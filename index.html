@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" type="text/css" href="styles.css" />
+		<title>Simple-PDF-Merge</title>
+	</head>
+	<body>
+		<div class="main">
+			<h1>Simple PDF Merger</h1>
+			<div>
+				<form id="form" action="/merge" method="post" enctype="multipart/form-data">
+					<input type="file" name="files" id="files" class="inputfile" accept="application/pdf" multiple />
+					<label for="custom-files" id="info" class="custom-file-upload" onclick="getFile()"> select files to upload ... </label>
+					<div id="filesSelected"></div>
+					<button id="submit-btn" class="hide" type="submit">Upload</button>
+				</form>
+			</div>
+		</div>
+	</body>
+	<script>
+		const filesSelected = document.getElementById('filesSelected')
+		document.getElementById('files').addEventListener('change', function (e) {
+			let info = document.getElementById('info')
+			let button = document.getElementById('submit-btn')
+			filesSelected.replaceChildren()
+			info.classList.remove('hide')
+			if (e.target.files) {
+				for (i = 0; i < e.target.files.length; i++) {
+					let p = document.createElement('p')
+					p.textContent = e.target.files[i].name
+					info.classList.add('hide')
+					button.classList.remove('hide')
+					filesSelected.append(p)
+				}
+			}
+		})
+
+		function getFile() {
+			document.getElementById('files').click()
+		}
+		/*
+		document.getElementById('form').addEventListener('submit', (e) => {
+			e.preventDefault()
+			console.log(e)
+		})*/
+	</script>
+</html>
