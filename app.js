@@ -3,15 +3,23 @@ const multer = require('multer')
 const fs = require('fs')
 const path = require('path')
 const { PDFDocument } = require('pdf-lib')
+const cors = require('cors')
 
 const app = express()
 const upload = multer({ dest: 'uploads/' })
+
+// CORS
+const corsOptions = {
+    origin: 'https://example.com', // Erlaubt nur Anfragen von example.com
+    optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions))
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public'))) // Serve static files from the 'public' directory
 app.disable('x-powered-by')
 
-app.get('/', function (req, res) {
+app.get('/', function (_, res) {
 	res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 

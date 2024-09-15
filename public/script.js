@@ -109,6 +109,7 @@ document.getElementById('form').addEventListener('submit', (e) => {
           document.body.appendChild(a);
           a.click();
           window.URL.revokeObjectURL(url);
+          window.location.reload();
       })
       .catch(error => console.error('Error:', error));
 });
