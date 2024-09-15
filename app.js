@@ -1,27 +1,18 @@
-import express from 'express'
-import multer from 'multer'
-import path from 'path'
-import { PDFDocument } from 'pdf-lib'
-import fs from 'fs'
-
-const __dirname = path.resolve()
-
-const upload = multer({
-	dest: 'temp/',
-	fileFilter: function (req, file, cb) {
-		if (path.extname(file.originalname) !== '.pdf') {
-			return cb('Only PDFs are allowed!!!')
-		}
-		cb(null, true)
-	},
-})
+const express = require('express')
+const multer = require('multer')
+const fs = require('fs')
+const path = require('path')
+const { PDFDocument } = require('pdf-lib')
 
 const app = express()
+const upload = multer({ dest: 'uploads/' })
+
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static(path.join(__dirname, 'public'))) // Serve static files from the 'public' directory
 app.disable('x-powered-by')
-app.use(express.static(__dirname))
 
 app.get('/', function (req, res) {
-	res.sendFile(__dirname + '/index.html')
+	res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 
 app.post('/merge', upload.array('files'), async function (req, res) {
@@ -29,13 +20,15 @@ app.post('/merge', upload.array('files'), async function (req, res) {
 	let pdfDoc = await PDFDocument.create()
 
 	for (let i = 0; i < pdfs.length; i++) {
-		let uint8Array = await PDFDocument.load(fs.readFileSync(pdfs[i].path))
+		let filePath = pdfs[i].path
+		let fileData = fs.readFileSync(filePath)
+		let uint8Array = await PDFDocument.load(fileData)
 		const copiedPages = await pdfDoc.copyPages(uint8Array, uint8Array.getPageIndices())
 		copiedPages.forEach((page) => pdfDoc.addPage(page))
-		fs.unlinkSync(pdfs[i].path)
+		fs.unlinkSync(filePath)
 	}
-	const concatFilename = pdfs.map((x) => path.parse(x.originalname).name)
-	const finalFilename = `./temp/${concatFilename.join('_') + '_' + Date.now()}_merged.pdf`
+
+	const finalFilename = `./temp/merged_${Date.now()}.pdf`
 	fs.writeFileSync(finalFilename, await pdfDoc.save())
 	res.download(finalFilename, (err) => {
 		if (err) console.log(err)
@@ -43,6 +36,6 @@ app.post('/merge', upload.array('files'), async function (req, res) {
 	})
 })
 
-app.listen(3000, function () {
-	console.log('Server started on port 3000')
+app.listen(3000, () => {
+	console.log('Server started on http://localhost:3000')
 })

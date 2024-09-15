@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Simple-PDF-Merge</title>
+</head>
+<body>
+    <div class="main">
+        <h1>Simple PDF Merger</h1>
+        <div>
+            <form id="form" action="/merge" method="post" enctype="multipart/form-data">
+                <input type="file" name="files" id="files" class="inputfile" accept="application/pdf" multiple />
+                <label for="custom-files" id="info" class="custom-file-upload" onclick="getFile()"> select or drop files to merge ... </label>
+                <div class="hide">You can drag and drop to change the order of the merge.</div>
+                <div class="filesSelected" id="filesSelected"></div>
+                <button id="submit-btn" class="hide" type="submit">Merge</button>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

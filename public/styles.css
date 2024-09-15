@@ -19,6 +19,7 @@ h1 {
 }
 p {
 	padding: 0.4em 0;
+	font-size: 1.2rem;
 	-moz-user-select: none;
 	-khtml-user-select: none;
 	-webkit-user-select: none;
@@ -39,11 +40,11 @@ form {
 }
 button {
 	height: 48px;
-	width: 128px;
+	width: 148px;
 	font-size: 1.1em;
 	border: solid 2px black;
 	background-color: #44bba4;
-	transition: 0.5s;
+	transition: 0.3s;
 }
 
 button:hover {
@@ -71,4 +72,43 @@ input[type='file'] {
 }
 .hide {
 	display: none;
+}
+.filesSelected {
+	display: flex;
+  	flex-direction: column;
+  	align-items: start;
+}
+
+.sortable-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sortable-list p {
+    padding: 10px;
+    margin: 5px 0;
+    border: solid 1px #44bba4;
+    background-color: #d3d0cb;
+    cursor: move;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.move-up, .move-down {
+    background-color: #44bba4;
+    border: none;
+    color: black;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+}
+
+.move-up:hover, .move-down:hover {
+    background-color: #d3d0cb;
 }
