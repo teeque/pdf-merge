@@ -1,3 +1,9 @@
-Simple PDF Merging Application
+# Simple PDF Merging Application
 
-input multiple pdf files and recieve a merged pdf output as a browser download.
+Input multiple pdf files and recieve a merged pdf output as a simple browser download.
+Files are not saved permanentely on the server and deleted after the request.
+
+DEMO: [https://pdf.fiae.app/](https://pdf.fiae.app/)
+
+### Prerequisites
+Nodejs
